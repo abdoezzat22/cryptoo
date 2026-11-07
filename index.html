@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CSC312 Cryptography – 100 MCQ Practice</title>
+<style>
+:root{color-scheme:dark;--bg:#0d1b33;--card:#14264a;--ink:#f1ead6;--mute:#a8b3c9;--line:#2a3f6b;--accent:#d4af37;--ok:#4cd68a;--okbg:#14412f;--no:#ff7b72;--nobg:#4a2024;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+h1{color:var(--accent)}
+.q h3 em{color:var(--accent)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",system-ui,-apple-system,Arial,sans-serif;line-height:1.5}
+header{text-align:center;padding:28px 16px 8px}
+h1{margin:0;font-size:1.5rem;font-weight:600}
+header p{margin:6px 0 0;color:var(--mute);font-size:.92rem}
+.stats{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;gap:10px;justify-content:center;padding:12px 12px;background:var(--bg)}
+.box{flex:1;max-width:170px;border-radius:14px;padding:10px 12px;text-align:center;border:1px solid var(--line);background:var(--card)}
+.box b{display:block;font-size:1.6rem;line-height:1.1}
+.box span{font-size:.78rem;color:var(--mute)}
+.box.ok b{color:var(--ok)}.box.no b{color:var(--no)}
+.bar{height:6px;background:var(--line);border-radius:6px;max-width:520px;margin:0 auto 6px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
+main{max-width:720px;margin:0 auto;padding:8px 14px 40px}
+.q{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:12px 0}
+.q h3{margin:0 0 12px;font-size:1rem;font-weight:600}
+.q h3 em{font-style:normal;color:var(--accent);margin-right:6px}
+.opt{display:block;width:100%;text-align:left;font:inherit;color:inherit;background:transparent;border:1.5px solid var(--line);border-radius:11px;padding:10px 12px;margin:7px 0;cursor:pointer;transition:background .15s,border-color .15s}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt:disabled{cursor:default}
+.opt.right{background:var(--okbg);border-color:var(--ok)}
+.opt.wrong{background:var(--nobg);border-color:var(--no)}
+footer{text-align:center;padding:10px 0 30px}
+button.reset{font:inherit;font-weight:600;background:var(--accent);color:#0d1b33;border:0;border-radius:12px;padding:10px 22px;cursor:pointer}
+#done{display:none;text-align:center;font-weight:600;margin:14px 0}
+</style>
+</head>
+<body>
+<header><h1>🔐 CSC312 – Cryptography Practice</h1><p>Classical Encryption &amp; Block Ciphers / DES · 100 MCQ</p></header>
+<div class="stats">
+  <div class="box ok"><b id="c">0</b><span>Correct · صح</span></div>
+  <div class="box no"><b id="w">0</b><span>Wrong · غلط</span></div>
+  <div class="box"><b id="r">100</b><span>Left · فاضل</span></div>
+</div>
+<div class="bar"><i id="p"></i></div>
+<main id="list"></main>
+<div id="done"></div>
+<footer><button class="reset" onclick="build()">Restart · ابدأ من جديد</button></footer>
+<script>
+// [question, correct, wrong1, wrong2, wrong3]
+const Q=[
+["The original, readable message is called:","Plaintext","Ciphertext","Keystream","Cryptogram"],
+["The coded message produced by encryption is called:","Ciphertext","Plaintext","Key","Digest"],
+["Converting plaintext into ciphertext is called:","Enciphering","Deciphering","Cryptanalysis","Steganography"],
+["Techniques for deciphering a message without knowing the enciphering details:","Cryptanalysis","Cryptography","Steganography","Encoding"],
+["Cryptology is the combination of:","Cryptography and cryptanalysis","Encryption and hashing","Substitution and transposition","Keys and ciphers"],
+["Two requirements for secure use of conventional encryption are a strong algorithm and:","A secret key shared securely and kept secure","A public key directory","A very long plaintext","A fast network"],
+["Symmetric encryption is also known as:","Single-key (secret-key) encryption","Two-key encryption","Public-key encryption","Asymmetric encryption"],
+["Which is NOT one of the three dimensions that characterize cryptographic systems?","The hardware used to run it","Type of operations (substitution/transposition)","Number of keys used","Way plaintext is processed"],
+["In a brute-force attack, on average what fraction of all possible keys must be tried?","Half","All of them","One quarter","Square root of them"],
+["A scheme where ciphertext holds no information to recover plaintext, regardless of time, is:","Unconditionally secure","Computationally secure","Partially secure","Weakly secure"],
+["A cipher whose breaking cost exceeds the value of the information is:","Computationally secure","Unconditionally secure","Perfectly secret","Broken"],
+["The Caesar cipher replaces each letter with the letter standing how many places further?","Three","One","Five","Thirteen"],
+["Caesar encryption formula (shift 3):","c = (p + 3) mod 26","c = (p − 3) mod 26","c = (3p) mod 26","c = (p + 3) mod 25"],
+["For the general Caesar cipher, the key k takes values in the range:","1 to 25","0 to 26","1 to 26","1 to 13"],
+["General Caesar decryption is:","p = (C − k) mod 26","p = (C + k) mod 26","p = (C × k) mod 26","p = (k − C) mod 25"],
+["Caesar (shift 3) encryption of ATTACK is:","DWWDFN","DXXDFN","CVVCEM","DWWEFN"],
+["Number of possible keys in a monoalphabetic substitution cipher:","26! (> 4 × 10²⁶)","26","2²⁶","26²"],
+["Why are monoalphabetic ciphers easy to break?","They preserve the letter frequency of the language","Their keys are short","They use XOR","They need two keys"],
+["Multiple substitutes for a single letter to flatten frequencies are called:","Homophones","Digrams","Trigrams","Polygraphs"],
+["The most common digram in English is:","th","he","in","er"],
+["The most frequent trigram in English is:","the","and","ing","ion"],
+["The Playfair cipher was invented by Wheatstone in:","1854","1929","1917","1977"],
+["The Playfair key matrix size is:","5 × 5","4 × 6","6 × 6","3 × 9"],
+["In Playfair, which two letters share one cell?","I and J","U and V","C and K","W and X"],
+["Playfair encrypts plaintext as:","Pairs of letters (digraphs)","Single letters","Blocks of 64 bits","Triplets"],
+["Playfair preprocessing of BALLOON gives:","BA LX LO ON","BA LL OO N","BAL LOO N","BA LL XO ON"],
+["Playfair: both letters in the same row are replaced by the letter:","To the right (wrap around)","To the left","Below","Above"],
+["Playfair: both letters in the same column are replaced by the letter:","Below (wrap around)","Above","To the right","To the left"],
+["Playfair rectangle rule: each letter is replaced by the letter in:","Its own row, at the other letter’s column","Its own column, at the other letter’s row","The next row","The diagonal"],
+["If Playfair plaintext has an odd number of letters, we:","Append X (or Z if last is X)","Delete the last letter","Repeat the first letter","Append J"],
+["Playfair decryption for letters in the same row:","Shift left","Shift right","Shift down","Swap corners"],
+["The Playfair rectangle rule in decryption is:","Identical to encryption (self-inverse)","Reversed vertically","Replaced by shift up","Not allowed"],
+["Main weakness of Playfair:","Digraph frequency analysis","Single-letter frequency","Key length of 1","It needs a computer"],
+["With key MONARCHY, the Playfair encryption of AR (same row) is:","RM","MR","OA","NR"],
+["The Hill cipher was developed by Lester Hill in:","1929","1854","1977","2001"],
+["Hill cipher encryption equation:","C ≡ K·P (mod 26)","C ≡ K + P (mod 26)","C ≡ P − K (mod 26)","C ≡ K·P (mod 25)"],
+["A Hill key matrix K is valid only if:","gcd(det K, 26) = 1","det K is even","det K = 0","det K is divisible by 13"],
+["How many determinant values in 1…25 are valid for Hill mod 26?","12","13","25","26"],
+["Why can’t the determinant be divisible by 2 or 13?","26 = 2 × 13, so no modular inverse exists","Because 26 is prime","Matrix becomes 3 × 3","It breaks the padding"],
+["A 3 × 3 Hill cipher hides:","Single-letter and two-letter frequencies","Only single-letter frequency","Nothing","Only key length"],
+["Hill cipher is strong against ciphertext-only attacks but easily broken by:","Known-plaintext attack","Brute-force on a 2-bit key","Rail fence","Timing attack only"],
+["Hill decryption equation:","P ≡ K⁻¹·C (mod 26)","P ≡ K·C (mod 26)","P ≡ C − K (mod 26)","P ≡ C / K"],
+["The algorithm used to compute modular inverses is the:","Extended Euclidean Algorithm","Kasiski test","Feistel network","Rectangle rule"],
+["Hill 2 × 2 with K = [9 4; 5 7], plaintext ACT (padded ACTX) encrypts to:","IODW","IOWD","DWIO","ACTX"],
+["Attacker recovers a Hill key from n known pairs using:","K = C × P⁻¹ (mod 26)","K = C + P","K = P × C","Frequency counting"],
+["Vigenère is a polyalphabetic cipher made of:","26 Caesar ciphers (shifts 0–25)","One Caesar cipher","5 × 5 grid","26! substitutions"],
+["In Vigenère, plaintext E with key letter L gives:","P","L","T","K"],
+["In the Vigenère autokey system the key is:","Keyword followed by the plaintext itself","A repeating keyword","Random and unique","The ciphertext"],
+["Kasiski examination is used to break:","Vigenère (repeating key)","DES","Playfair only","One-time pad"],
+["Autokey remains vulnerable because key and plaintext:","Share the same letter-frequency distribution","Are both random","Are the same length as DES keys","Use XOR"],
+["The one-time pad improvement of Vernam was proposed by:","Joseph Mauborgne","Claude Shannon","Lester Hill","Horst Feistel"],
+["In a one-time pad the key must be:","Random, as long as the message, used once","Short and repeating","Reused daily","Derived from plaintext"],
+["The only cryptosystem that exhibits perfect secrecy is:","One-time pad","DES","Vigenère","Hill cipher"],
+["A fundamental difficulty of the one-time pad:","Key generation and key distribution","Weak mathematics","Short keys","Frequency leakage"],
+["Rail fence and row transposition ciphers are:","Transposition ciphers","Substitution ciphers","Stream ciphers","Public-key ciphers"],
+["In a row transposition cipher, the key is:","The order in which columns are read","The row count only","A 5 × 5 matrix","A random bit stream"],
+["Steganography’s main purpose is to hide:","The existence of the message","The key length","The algorithm","The sender’s IP"],
+["A drawback of steganography compared to encryption:","High overhead to hide few bits","It needs a key exchange","It is slower than DES","It is a block cipher"],
+["Which is an advantage of steganography?","Hides the fact that secret communication exists","Provides perfect secrecy","Needs no overhead","Cannot be discovered"],
+["A stream cipher encrypts data:","One bit or byte at a time","In 64-bit blocks","In 128-bit blocks only","With public keys"],
+["A practical stream-cipher bit generator must make future bits:","Computationally impractical to predict","Easy to predict","Identical to plaintext","Constant"],
+["A block cipher treats a plaintext block as a whole and produces:","A ciphertext block of equal length","A shorter block","A longer block","A single bit"],
+["Typical block sizes are:","64 or 128 bits","8 or 16 bits","256 or 512 bits","1 bit"],
+["In the ideal block cipher with n = 64, the key (lookup table) would need about:","10²¹ bits","64 bits","56 bits","128 bits"],
+["The Feistel cipher is a practical version of the ideal block cipher because:","The key defines the transformation instead of a huge table","It uses a larger block","It has no rounds","It is unkeyed"],
+["A product cipher is:","Two or more simple ciphers executed in sequence","A single huge table","A hash function","A stream generator"],
+["Feistel proposed a cipher that alternates:","Substitutions and permutations","Hashes and MACs","Keys and nonces","Stream and block modes"],
+["Feistel is a practical application of whose proposal?","Claude Shannon (confusion and diffusion)","Lester Hill","Joseph Mauborgne","Whitfield Diffie"],
+["Diffusion means:","Each plaintext digit affects many ciphertext digits","Key–ciphertext relation is complex","Key is longer","Plaintext is compressed"],
+["Confusion seeks to make the relationship between ciphertext statistics and the key:","As complex as possible","Linear","Identical","Constant"],
+["Shannon’s concern when proposing diffusion/confusion was to thwart:","Statistical analysis","Timing attacks","Social engineering","Brute-force"],
+["Feistel decryption uses the same algorithm with:","Subkeys applied in reverse order","The same order of subkeys","A different block size","No keys"],
+["Feistel round: RE_i equals:","LE_(i−1) ⊕ F(RE_(i−1), K_i)","RE_(i−1) ⊕ K_i","LE_(i−1)","F(LE_(i−1), K_i)"],
+["Essence of the Feistel number of rounds:","One round is inadequate; more rounds give more security","One round is enough","Rounds don’t affect security","Fewer rounds are faster and safer"],
+["Feistel one round: PT = 101110, K1 = 010, F = Data XOR K. L1 and R1 are:","L1 = 110, R1 = 001","L1 = 101, R1 = 100","L1 = 001, R1 = 110","L1 = 110, R1 = 100"],
+["DES was issued in 1977 as:","FIPS 46","FIPS 197","RFC 2104","ISO 9798"],
+["DES was the most widely used scheme until the introduction of AES in:","2001","1990","1985","2010"],
+["DES block size and effective key size:","64-bit block, 56-bit key","56-bit block, 64-bit key","128-bit block, 128-bit key","64-bit block, 48-bit key"],
+["Number of rounds in DES:","16","10","12","8"],
+["DES round key (subkey) size:","48 bits","56 bits","64 bits","32 bits"],
+["DES expansion permutation changes 32 bits into:","48 bits","64 bits","56 bits","40 bits"],
+["The number of S-boxes in DES:","8","4","16","2"],
+["Each DES S-box maps:","6 input bits to 4 output bits","4 to 6 bits","6 to 6 bits","8 to 8 bits"],
+["S₁(101010) = ? (row from outer bits, column from middle bits)","6 (0110)","14 (1110)","10 (1010)","0 (0000)"],
+["The DES P-box (permutation function) maps:","32 bits to 32 bits","48 to 32 bits","32 to 48 bits","64 to 56 bits"],
+["Permuted Choice 1 in key scheduling reduces the key from:","64 to 56 bits","56 to 48 bits","64 to 48 bits","48 to 32 bits"],
+["Permuted Choice 2 (contraction permutation) outputs:","48 bits","56 bits","32 bits","64 bits"],
+["In DES key scheduling, rounds 1, 2, 9 and 16 use a left shift of:","1 bit","2 bits","3 bits","4 bits"],
+["Total left shifts across all 16 DES rounds:","28","16","32","24"],
+["DES decryption uses subkeys in the order:","K16 down to K1","K1 up to K16","Random order","Only K8"],
+["Table 4.3/4.4: a small change in plaintext or key changing many ciphertext bits is the:","Avalanche effect","Timing effect","Brute-force effect","Birthday effect"],
+["Number of possible DES keys:","2⁵⁶ ≈ 7.2 × 10¹⁶","2⁶⁴","2¹²⁸","2⁴⁸"],
+["Time to exhaustively search DES at 10¹³ decryptions/s (Table 4.5):","About 1 hour","About 1.125 years","5.3 × 10¹⁷ years","1 second"],
+["Triple DES uses an effective key size of:","168 bits","56 bits","128 bits","256 bits"],
+["A timing attack is a type of:","Side-channel attack","Mathematical break of the algorithm","Brute-force key search","Man-in-the-middle attack"],
+["A timing attack exploits the fact that an algorithm:","Takes slightly different time on different inputs","Uses a short key","Has too many rounds","Uses XOR"],
+["If DES had 15 or fewer rounds, differential cryptanalysis would:","Need less effort than brute-force search","Need more effort than brute force","Be impossible","Be identical to brute force"],
+["The “golden rule” for choosing rounds: effort of cryptanalysis should be:","≥ effort of brute-force key search","< effort of brute force","= 0","Independent of key length"],
+["Strict Avalanche Criterion (SAC): any output bit changes with probability … when one input bit is inverted.","1/2","1/4","1","0"],
+["For a Feistel cipher, the heart of the cipher is function F; the more nonlinear F is:","The harder cryptanalysis becomes","The easier cryptanalysis becomes","The faster the key search","The shorter the key"]
+];
+const el=id=>document.getElementById(id);
+let ok=0,bad=0;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function stats(){el("c").textContent=ok;el("w").textContent=bad;el("r").textContent=Q.length-ok-bad;el("p").style.width=((ok+bad)/Q.length*100)+"%";
+ const d=el("done");if(ok+bad===Q.length){d.style.display="block";d.textContent="Finished! Score: "+ok+" / "+Q.length+" ("+Math.round(ok/Q.length*100)+"%)"}else d.style.display="none"}
+function build(){
+ ok=0;bad=0;const L=el("list");L.innerHTML="";
+ Q.forEach((q,i)=>{
+  const d=document.createElement("div");d.className="q";
+  const h=document.createElement("h3");h.innerHTML="<em>"+(i+1)+".</em>";h.append(q[0]);d.append(h);
+  const btns=shuffle(q.slice(1).map((t,k)=>({t,right:k===0}))).map(o=>{
+   const b=document.createElement("button");b.className="opt";b.textContent=o.t;b.dataset.right=o.right?"1":"";return b});
+  btns.forEach(b=>{b.onclick=()=>{
+    btns.forEach(x=>{x.disabled=true;if(x.dataset.right)x.classList.add("right")});
+    if(b.dataset.right){ok++}else{b.classList.add("wrong");bad++}
+    stats()};d.append(b)});
+  L.append(d)});
+ stats();window.scrollTo(0,0)}
+build();
+</script>
+</body>
+</html>
